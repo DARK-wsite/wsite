@@ -1,248 +1,177 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>wsite</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <title>DARK_D | الموقع الرسمي</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
 
     <style>
-        body {
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-rendering: optimizeLegibility;
-}
-        /* إضافة تأثير "التوثيق" (العلامة الزرقاء) بجانب الاسم */
-        .verified-badge::after {
-        content: " ✔";
-        color: #1da1f2; /* لون توثيق تويتر/X */
-        font-size: 18px;
-        vertical-align: middle;
-}
+        /* 1. نظام الألوان المتناسق */
         :root {
-        /* الألوان في الوضع الفاتح (الافتراضي) */
-        --main-bg: #f4f7f6;
-        --card-bg: #ffffff;
-        --text-color: #111111;
-        --section-bg: #f9f9f9;
-}
-    :root {
-        /* الألوان في الوضع الداكن (تتغير تلقائياً حسب النظام) */
-        --main-bg: #121212;
-        --card-bg: #1e1e1e;
-        --text-color: #eeeeee;
-        --section-bg: #252525;
-    }   
-
-
-        /* [1] الصفحة الأساسية */
-        html, body { 
-            margin: 0; padding: 0; min-height: 100%; width: 100%;
+            --primary: #2563eb;
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --nav-bg: rgba(255, 255, 255, 0.85);
+            --border: #e2e8f0;
+            --shadow: 0 10px 30px -5px rgba(0,0,0,0.05);
         }
 
-        body {
-            -webkit-font-smoothing: antialiased; /* تجعل الخط أنعم على شاشات الماك والآيفون */
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeLegibility; /* تحسن المسافات بين الحروف للقراءة */
-            background: #f4f7f6; /* خلفية هادئة جداً وراقية */
-            font-family: 'Cairo', 'Poppins', sans-serif;
-            display: flex; flex-direction: column; 
-            align-items: center; justify-content: flex-start;
-            transition: background 0.5s ease;
+        [data-theme="dark"] {
+            --bg-body: #020617;
+            --bg-card: #0f172a;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --nav-bg: rgba(15, 23, 42, 0.85);
+            --border: #1e293b;
+            --shadow: 0 20px 50px rgba(0,0,0,0.3);
         }
 
-        /* [2] البطاقة الاحترافية */
-        .card {
-            background: var(--card-bg); /* هنا يقرر المتصفح اللون بناءً على وضع الجهاز */
-            color: var(--text-color);
-            width: 90%; max-width: 420px;
-            padding: 45px 35px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1); /* ظل يبرز البطاقة بوضوح */
-            position: relative; text-align: center; 
-            margin: auto; margin-top: 60px; margin-bottom: 60px;
-            border: 1px solid #eee;
+        /* 2. تحسينات عامة */
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Cairo', sans-serif; background: var(--bg-body); color: var(--text-main); line-height: 1.8; }
+
+        /* 3. شريط التقدم */
+        #progress-bar { position: fixed; top: 0; right: 0; height: 3px; background: var(--primary); z-index: 3000; width: 0%; }
+
+        /* 4. الناف بار الاحترافي */
+        .navbar {
+            position: fixed; top: 0; width: 100%; z-index: 2500;
+            background: var(--nav-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border); padding: 12px 8%;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo { font-weight: 900; font-size: 1.6rem; color: var(--primary); letter-spacing: -1px; }
+        .nav-links { display: flex; gap: 25px; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text-main); font-weight: 700; font-size: 0.95rem; }
+        .nav-links a:hover { color: var(--primary); }
+
+        .container { max-width: 900px; margin: 100px auto 50px; padding: 0 20px; }
+
+        /* 5. الهيرو (رأس الصفحة) */
+        .hero { text-align: center; padding: 50px 0; }
+        .hero-avatar {
+            width: 150px; height: 150px; border-radius: 50%; border: 5px solid var(--primary);
+            padding: 5px; background: var(--bg-card); display: inline-block;
+            box-shadow: 0 0 20px rgba(37, 99, 235, 0.2);
+        }
+        .hero h1 { font-size: 3rem; font-weight: 900; margin: 20px 0 10px; }
+
+        /* 6. الأقسام الجديدة */
+        .site-section {
+            background: var(--bg-card); border-radius: 28px; padding: 45px;
+            margin-bottom: 30px; border: 1px solid var(--border); box-shadow: var(--shadow);
+        }
+        .section-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 20px; display: flex; align-items: center; gap: 15px; }
+        .section-title::after { content: ""; height: 3px; flex-grow: 1; background: var(--border); border-radius: 10px; }
+
+        /* 7. شبكة الروابط التفاعلية */
+        .links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+        .link-item {
+            display: flex; align-items: center; justify-content: space-between; padding: 22px;
+            background: var(--bg-body); border-radius: 20px; text-decoration: none;
+            color: var(--text-main); font-weight: 700; border: 1px solid var(--border);
+        }
+        .link-item:hover { transform: translateY(-5px) scale(1.02); background: var(--primary); color: white; border-color: var(--primary); }
+        .link-item i { font-size: 1.5rem; }
+
+        /* 8. أزرار التحكم والوضع */
+        .control-btn {
+            width: 45px; height: 45px; border-radius: 12px; border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
+            background: var(--bg-card); color: var(--text-main);
         }
 
-        /* [3] أزرار اللغة - واضحة ومحددة */
-        .lang-container { position: absolute; top: 20px; right: 25px; display: flex; gap: 10px; }
-        .lang-container button {
-            background: #fff; border: 1.5px solid #333; color: #333;
-            padding: 5px 15px; font-size: 13px; border-radius: 8px;
-            cursor: pointer; transition: 0.3s; font-weight: 700;
-        }
-        .lang-container button:hover { background: #333; color: #fff; }
+        footer { text-align: center; padding: 60px 20px; color: var(--text-muted); font-size: 0.9rem; }
 
-        /* [4] الصورة الشخصية */
-        .profile-img {
-            width: 115px; height: 115px; border-radius: 50%;
-            object-fit: cover; border: 4px solid #fff;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            transition: transform 0.3s ease;
-        }
-        .profile-img:hover { transform: scale(1.08); }
-
-        /* [5] النصوص والعناوين - وضوح فائق */
-        h1 { font-size: 26px; color: #111; margin-bottom: 12px; font-weight: 700; }
-        #desc { color: #555; font-size: 16px; margin-bottom: 30px; line-height: 1.6; }
-
-        .about-section {
-            background: #f9f9f9;
-            padding: 20px; border-radius: 15px; margin-bottom: 30px;
-            border-right: 5px solid #007bff; /* لمسة لونية تدل على الاحترافية */
-            text-align: right;
-        }
-        .about-section h3 { margin: 0 0 8px; font-size: 18px; color: #007bff; }
-        .about-section p { margin: 0; font-size: 15px; color: #333; line-height: 1.6; }
-
-        /* [6] الروابط - تصميم جدي مع هوفر ذكي */
-        .social-links a {
-            display: block; background: #fff; color: #222;
-            text-decoration: none; padding: 16px; margin: 12px 0;
-            border-radius: 12px; border: 2px solid #f0f0f0; 
-            font-weight: 700; font-size: 15px;
-            transition: all 0.3s ease;
-        }
-        .social-links a:hover {
-            border-color: #007bff;
-            color: #007bff;
-            background-color: #f0f7ff;
-            transform: translateX(-5px); /* حركة جانبية بسيطة تدل على التفاعل */
-        }
-
-        /* [7] تخصيص الألوان */
-        .color-picker { margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; }
-        .color-picker-buttons { display: flex; justify-content: center; gap: 15px; }
-        .color-picker button {
-            width: 28px; height: 28px; border-radius: 50%; border: 2px solid #fff;
-            cursor: pointer; transition: 0.3s; box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-        }
-        .color-picker button:hover { transform: scale(1.25); }
-
-        /* هذا الجزء يجعل الألوان تتغير إذا كان نظام المستخدم "داكن" */
-@media (prefers-color-scheme: dark) {
-    body {
-        background: #121212; /* خلفية الصفحة تصبح سوداء */
-    }
-    .card {
-        background: #1e1e1e; /* البطاقة تصبح رمادي غامق */
-        border-color: #333;
-        color: white; /* النص يصبح أبيض */
-    }
-    h1, #about-text, .social-links a {
-        color: #ffffff; /* توضيح الكتابة في الوضع المظلم */
-    }
-    .social-links a {
-        background: #252525;
-        border-color: #444;
-    }
-    .about-section {
-        background: #252525;
-    }
-}
+        @media (max-width: 650px) { .nav-links { display: none; } }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <div class="lang-container">
-            <button onclick="setLanguage('ar')">عربي</button>
-            <button onclick="setLanguage('en')">EN</button>
-        </div>
+    <div id="progress-bar"></div>
 
-        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="profile-img" alt="User Image">
+    <nav class="navbar">
+        <div class="logo">DARK_D</div>
+        <ul class="nav-links">
+            <li><a href="#home">الرئيسية</a></li>
+            <li><a href="#about">النبذة</a></li>
+            <li><a href="#links">الروابط</a></li>
+        </ul>
+        <div class="control-btn" id="theme-toggle"><i class="fas fa-moon"></i></div>
+    </nav>
 
-        <h1 id="title">أهلاً بك في عالمي الرقمي</h1>
-        
-        <div class="about-section" id="about-box">
-            <h3 id="about-title">نبذة عني</h3>
-            <p id="about-text">أنا مبرمج طموح، مهتم بتطوير الألعاب وصناعة المحتوى الرقمي. أشارككم هنا رحلتي في تعلم البرمجة وأحدث أعمالي.</p>
-        </div>
+    <div class="container">
+        <header class="hero" id="home">
+            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="hero-avatar" alt="DARK_D Profile">
+            <h1>DARK_D</h1>
+            <p style="color: var(--text-muted); font-size: 1.2rem; font-weight: 600;">صناعة المحتوى.. فن برمجته</p>
+        </header>
 
-        <p id="desc">أنا أتعلم الآن كيف أبني موقعي الخاص خطوة بخطوة.</p>
+        <section class="site-section" id="about">
+            <h2 class="section-title">من أنا</h2>
+            <p>أنا مبرمج ومطور ألعاب مهتم بخلق تجارب بصرية وتقنية متكاملة. هدفي هو بناء محتوى رقمي يترك أثراً، سواء من خلال الألعاب التي أطورها أو الدروس التي أقدمها.</p>
+        </section>
 
-        <div class="social-links">
-            <a href="http://www.youtube.com/@DARK_D-f6q" id="yt-link" target="_blank">قناتي في يوتيوب</a>
-            <a href="twitter_account.html" id="x-link">حسابي في X</a>
-            <a href="my_game.html" id="game-link">لعبتي الخاصة</a>
-        </div>
+        <section class="site-section" id="links">
+            <h2 class="section-title">الروابط</h2>
+            <div class="links-grid">
+                
+                <a href="#" class="link-item" target="_blank">
+                    <span>تجربة اللعبة الخاصة</span>
+                    <i class="fas fa-gamepad"></i>
+                </a>
 
-        <div class="color-picker">
-            <div class="color-picker-buttons">
-                <button onclick="changeColor('#667eea', '#764ba2')" style="background: #667eea;"></button>
-                <button onclick="changeColor('#2c3e50', '#000000')" style="background: #2c3e50;"></button>
-                <button onclick="changeColor('#1a2a6c', '#b21f1f')" style="background: #1a2a6c;"></button>
-                <button onclick="changeColor('#11998e', '#38ef7d')" style="background: #11998e;"></button>
+                <a href="http://www.youtube.com/@DARK_D-f6q" class="link-item" target="_blank">
+                    <span>قناة يوتيوب الرسمية</span>
+                    <i class="fab fa-youtube"></i>
+                </a>
+
+                <a href="#" class="link-item" target="_blank">
+                    <span>حسابي في منصة X</span>
+                    <i class="fab fa-x-twitter"></i>
+                </a>
+
             </div>
-        </div>
+        </section>
+
+        <footer>
+            <p>© 2026 تم الإنجاز بواسطة <b style="color: var(--primary)">DARK_D</b></p>
+        </footer>
     </div>
 
     <script>
-        function changeColor(c1, c2) {
-            document.body.style.background = `linear-gradient(135deg, ${c1}, ${c2})`;
-            localStorage.setItem('theme', JSON.stringify({c1, c2}));
-        }
+        // نظام شريط التقدم
+        window.onscroll = () => {
+            let winScroll = document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            document.getElementById("progress-bar").style.width = (winScroll / height) * 100 + "%";
+        };
 
-        function setLanguage(lang) {
-            localStorage.setItem('lang', lang);
-            applyLanguage(lang);
-        }
+        // نظام تبديل الألوان (تلقائي + يدوي)
+        const toggle = document.getElementById('theme-toggle');
+        const icon = toggle.querySelector('i');
 
-        function applyLanguage(lang) {
-            const t = {
-                ar: { 
-                    title: "أهلاً بك في عالمي الرقمي", 
-                    aboutT: "نبذة عني", 
-                    aboutP: "أنا مبرمج طموح، مهتم بتطوير الألعاب وصناعة المحتوى الرقمي. أشارككم هنا رحلتي في تعلم البرمجة وأحدث أعمالي.", 
-                    desc: "أنا أتعلم الآن كيف أبني موقعي الخاص خطوة بخطوة.", 
-                    yt: "قناتي في يوتيوب", 
-                    x: "حسابي في X", 
-                    game: "لعبتي الخاصة", 
-                    dir: "rtl",
-                    align: "right",
-                    border: "border-right"
-                },
-                en: { 
-                    title: "Welcome to My Digital World", 
-                    aboutT: "About Me", 
-                    aboutP: "I am an aspiring developer interested in game development and content creation. Here I share my coding journey.", 
-                    desc: "I am learning how to build my website step by step.", 
-                    yt: "YouTube Channel", 
-                    x: "X Account", 
-                    game: "My Special Game", 
-                    dir: "ltr",
-                    align: "left",
-                    border: "border-left"
-                }
-            }[lang];
+        const applyTheme = (theme) => {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        };
 
-            document.getElementById('title').innerText = t.title;
-            document.getElementById('about-title').innerText = t.aboutT;
-            document.getElementById('about-text').innerText = t.aboutP;
-            document.getElementById('desc').innerText = t.desc;
-            document.getElementById('yt-link').innerText = t.yt;
-            document.getElementById('x-link').innerText = t.x;
-            document.getElementById('game-link').innerText = t.game;
-            
-            document.body.style.direction = t.dir;
-            const aboutBox = document.getElementById('about-box');
-            aboutBox.style.textAlign = t.align;
-            
-            // تعديل مكان الخط الأزرق حسب اللغة
-            if(lang === 'en') {
-                aboutBox.style.borderRight = "none";
-                aboutBox.style.borderLeft = "5px solid #007bff";
-            } else {
-                aboutBox.style.borderLeft = "none";
-                aboutBox.style.borderRight = "5px solid #007bff";
-            }
-        }
+        // التعرف على النمط المفضل (نظام المستخدم أو الاختيار السابق)
+        const savedTheme = localStorage.getItem('theme') || 
+            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 
-        window.onload = () => {
-            const theme = JSON.parse(localStorage.getItem('theme'));
-            if (theme) changeColor(theme.c1, theme.c2);
-            applyLanguage(localStorage.getItem('lang') || 'ar');
+        applyTheme(savedTheme);
+
+        toggle.onclick = () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            applyTheme(current === 'dark' ? 'light' : 'dark');
         };
     </script>
 </body>
